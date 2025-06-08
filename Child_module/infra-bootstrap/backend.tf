@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "Terraform-state" {
-  bucket = "terraform-practice-s3-david-vacca"
+  bucket = var.bucket_name
 }
 
 resource "aws_s3_bucket_versioning" "Terraform-state" {
