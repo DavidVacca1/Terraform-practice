@@ -2,24 +2,51 @@
     "Version": "2012-10-17",
     "Statement": [
         {
+            "Sid": "ReadAccessToDevOpsServices",
             "Effect": "Allow",
             "Action": [
-                "*:Describe*",
-                "*:List*",
-                "*:Get*"
+                "ec2:Describe*",
+                "eks:List*",
+                "eks:Describe*",
+                "s3:Get*",
+                "s3:List*",
+                "logs:Get*",
+                "logs:Describe*",
+                "logs:List*",
+                "cloudwatch:Get*",
+                "cloudwatch:Describe*",
+                "cloudwatch:List*",
+                "iam:Get*",
+                "iam:List*",
+                "rds:Describe*",
+                "autoscaling:Describe*",
+                "elasticloadbalancing:Describe*",
+                "lambda:List*",
+                "lambda:Get*",
+                "ssm:Describe*",
+                "ssm:GetParameters",
+                "cloudtrail:Describe*",
+                "cloudtrail:Get*",
+                "cloudtrail:List*"
             ],
             "Resource": "*"
         },
         {
+            "Sid": "DenySecretsAccess",
             "Effect": "Deny",
             "Action": [
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:ListSecrets"
+                "secretsmanager:Get*",
+                "secretsmanager:Describe*",
+                "secretsmanager:List*",
+                "ssm:GetParameter",
+                "ssm:GetParametersByPath",
+                "ssm:GetParameters",
+                "kms:Decrypt"
             ],
             "Resource": "*"
         },
         {
+            "Sid": "FullEC2Access",
             "Effect": "Allow",
             "Action": "ec2:*",
             "Resource": "*"
