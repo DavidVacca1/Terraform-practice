@@ -41,4 +41,6 @@ resource "aws_subnet" "Private_eks_subnets" {
 
 # internet Gateway
 
-
+resource "aws_internet_gateway" "eks_IG" {
+  vpc_id = aws_vpc.Vpc_eks.id
+}
