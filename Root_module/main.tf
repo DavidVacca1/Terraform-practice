@@ -14,4 +14,6 @@ module "vpc" {
   vpc_cidr            = var.vpc_cidr
   Public_eks_subnets  = var.Public_eks_subnets
   Private_eks_subnets = var.Private_eks_subnets
+  cidr_block          = var.cidr_block
+
 }

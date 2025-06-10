@@ -3,6 +3,11 @@ variable "vpc_cidr" {
 
 }
 
+variable "cidr_block" {
+  type = string
+
+}
+
 variable "Public_eks_subnets" {
   type        = list(string)
   description = "Lista de bloques CIDR para las subnets públicas"
