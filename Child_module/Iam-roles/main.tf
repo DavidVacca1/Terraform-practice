@@ -10,8 +10,7 @@ resource "aws_iam_role" "Role" {
     "${path.module}/assume_role_policy.tpl.json", # Archivo que tiene las reglas para esto
     {
       principal_arn = each.value.assume_role_policy_principal
-      # Aquí pone el ARN que definiste para cada rol, por ejemplo:
-      # Para DeveloperDevAccessRole es "arn:aws:iam::029864681999:role/Devops_Engineer_role"
+      # Aquí pone el ARN que definiste para cada rol, por ejemplo: Para DeveloperDevAccessRole es "arn:aws:iam::029864681999:role/Devops_Engineer_role"
     }
   )
 }
@@ -21,30 +20,25 @@ resource "aws_iam_policy" "Policy" {
   for_each = {
     for role_name, role in var.roles :
     role_name => role
-    if contains(keys(role), "policy_files") && length(role.policy_files) > 0
-    # Solo crea política para roles que tengan al menos un archivo de políticas, como:
+    if contains(keys(role), "policy_files") && length(role.policy_files) > 0 # Solo crea política para roles que tengan al menos un archivo de políticas, como:
     # DeveloperDevAccessRole que tiene "policies/DeveloperDevAccesRole.json"
   }
 
   name = "${each.key}-policy"
-  # El nombre de la política será el nombre del rol más "-policy"
-  # Ejemplo: "DeveloperDevAccessRole-policy", "DevopsDevAccessRole-policy"
+  # El nombre de la política será el nombre del rol más "-policy" Ejemplo: "DeveloperDevAccessRole-policy", "DevopsDevAccessRole-policy"
 
   description = "Custom policy for ${each.key}"
   # Explicación sencilla para saber para qué es la política
 
   policy = file("${path.module}/policies/${each.key}.json")
-  # Lee el archivo de reglas para esta política
-  # Por ejemplo: lee "policies/DeveloperDevAccesRole.json" para DeveloperDevAccessRole
-  # y "policies/DevopsDevAccesRole.json" para DevopsDevAccessRole
+  # Lee el archivo de reglas para esta política Por ejemplo: lee "policies/DeveloperDevAccesRole.json" para DeveloperDevAccessRole
 }
 
 # Une o conecta la política creada al rol correspondiente
 resource "aws_iam_role_policy_attachment" "custom_policy_attachment" {
-  for_each = toset(var.roles_to_attach_custom_policy)
-  # Para cada nombre de rol que quieres conectar con su política personalizada
-  # Aquí usas la lista:
-  # ["DeveloperDevAccessRole", "DevopsDevAccessRole"]
+  depends_on = [aws_iam_role.Role]
+  for_each   = toset(var.roles_to_attach_custom_policy)
+  # Para cada nombre de rol que quieres conectar con su política personalizada Aquí usas la lista: ["DeveloperDevAccessRole", "DevopsDevAccessRole"]
 
   policy_arn = aws_iam_policy.Policy[each.key].arn
   # Toma la "dirección" (ARN) de la política creada para ese rol
