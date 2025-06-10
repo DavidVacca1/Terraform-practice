@@ -16,13 +16,14 @@ resource "aws_vpc" "Vpc_eks" {
 data "aws_availability_zones" "available" {}
 
 resource "aws_subnet" "Public_eks_subnets" {
-  count             = length(var.Public_eks_subnets)
+  count             = length(var.Public_eks_subnets) # crea subnet basada en el numero (length) de cird que estan en la variante public
   vpc_id            = aws_vpc.Vpc_eks.id
-  cidr_block        = var.Public_eks_subnets[count.index]
+  cidr_block        = var.Public_eks_subnets[count.index] #adjudica el cidr_block de la lista de Public_eks_subnets 
   availability_zone = data.aws_availability_zones.available.names[count.index % length(data.aws_availability_zones.available.names)]
+  # busca las AZ disponibles y las distribulle segun cada subnet y si son mas subnets se repiten las AZ
 
   tags = {
-    Name = "Public_subnet_${count.index + 1}"
+    Name = "Public_subnet_${count.index + 1}" # anade un numero para cada subnet
   }
 }
 
