@@ -14,3 +14,19 @@ variable "roles_to_attach_custom_policy" {
   description = "Lista de nombres de roles a los que se les debe adjuntar una política personalizada."
   type        = list(string)
 }
+
+variable "vpc_cidr" {
+  type = string
+
+}
+
+variable "Public_eks_subnets" {
+  type        = list(string)
+  description = "Lista de bloques CIDR para las subnets públicas"
+}
+
+variable "Private_eks_subnets" {
+  type        = list(string)
+  description = "Lista de bloques CIDR para las subnets privadas"
+
+}

@@ -12,7 +12,6 @@ resource "aws_iam_role" "Role" {
       principal_arn = each.value.assume_role_policy_principal
       # Aquí pone el ARN que definiste para cada rol, por ejemplo:
       # Para DeveloperDevAccessRole es "arn:aws:iam::029864681999:role/Devops_Engineer_role"
-      # Para DevopsDevAccessRole también es "arn:aws:iam::029864681999:role/Devops_Engineer_role"
     }
   )
 }
@@ -25,7 +24,6 @@ resource "aws_iam_policy" "Policy" {
     if contains(keys(role), "policy_files") && length(role.policy_files) > 0
     # Solo crea política para roles que tengan al menos un archivo de políticas, como:
     # DeveloperDevAccessRole que tiene "policies/DeveloperDevAccesRole.json"
-    # DevopsDevAccessRole que tiene "policies/DevopsDevAccesRole.json"
   }
 
   name = "${each.key}-policy"
