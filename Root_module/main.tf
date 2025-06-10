@@ -1,9 +1,10 @@
 provider "aws" {
   region = var.region
 }
-module "infra-bootstrap" {
-  source         = "../Child_module/infra-bootstrap"
-  bucket_name    = var.bucket_name
-  dynamodb_table = var.dynamodb_table
 
+module "roles_dev" {
+  source                        = "../Child_module/Iam-roles"
+  roles                         = var.roles
+  roles_to_attach_custom_policy = var.roles_to_attach_custom_policy
 }
+
