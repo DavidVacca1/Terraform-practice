@@ -74,7 +74,7 @@ resource "aws_route_table_association" "Public_RT_association" {
 
 # resource "aws_nat_gateway" "eks_NG" {
 #   allocation_id = aws_eip.eip_Nat_gateway.id
-#   subnet_id     = aws_subnet.Private_eks_subnets[0].id
+#   subnet_id     = aws_subnet.Public_eks_subnets[0].id
 # }
 
 # Route tables and table association private
