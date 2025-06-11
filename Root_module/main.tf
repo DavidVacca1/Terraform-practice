@@ -17,3 +17,8 @@ module "vpc" {
   cidr_block          = var.cidr_block
 
 }
+
+module "eks" {
+  source = "../Child_module/eks"
+
+}
