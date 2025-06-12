@@ -37,37 +37,3 @@ resource "aws_security_group" "k8scluster-sg" {
     "Name"                                        = "eks-cluster-sg-${local.cluster_name}"
   }
 }
-
-resource "aws_security_group_rule" "allow_ingress" {
-  depends_on        = [aws_security_group.worker_nodes_sg]
-  security_group_id = aws_security_group.k8scluster-sg.id
-
-  type                     = "ingress"
-  from_port                = 443
-  to_port                  = 443
-  protocol                 = "TCP"
-  source_security_group_id = aws_security_group.worker_nodes_sg.id
-
-}
-
-resource "aws_security_group_rule" "allow_egress_443" {
-  depends_on        = [aws_security_group.worker_nodes_sg]
-  security_group_id = aws_security_group.k8scluster-sg.id
-
-  type                     = "egress"
-  from_port                = 443
-  to_port                  = 443
-  protocol                 = "TCP"
-  source_security_group_id = aws_security_group.worker_nodes_sg.id
-}
-
-resource "aws_security_group_rule" "allow_egress_tcp" {
-  depends_on        = [aws_security_group.worker_nodes_sg]
-  security_group_id = aws_security_group.k8scluster-sg.id
-
-  type                     = "egress"
-  from_port                = 1025
-  to_port                  = 65535
-  protocol                 = "TCP"
-  source_security_group_id = aws_security_group.worker_nodes_sg.id
-}

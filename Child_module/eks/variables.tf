@@ -49,3 +49,38 @@ variable "vpc_id" {
   type = string
 
 }
+
+variable "workers_desired" {
+  type        = number
+  description = "Desired number of worker nodes"
+}
+
+variable "workers_min" {
+  type        = number
+  description = "Min number of worker nodes"
+}
+
+variable "workers_max" {
+  type        = number
+  description = "Max number of worker nodes"
+}
+
+variable "instance_type" {
+  type        = string
+  description = "Worker nodes instance type"
+}
+
+variable "volume_type" {
+  type        = string
+  description = "Worker nodes launch template volume type"
+}
+
+variable "iam_role_names" {
+  type        = list(string)
+  description = "EKS cluster iam role names, including admin access and all applications access"
+}
+
+variable "health_check_type" {
+  type        = string
+  description = "Woker nodes ASG health check type"
+}
