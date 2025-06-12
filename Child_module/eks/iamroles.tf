@@ -1,5 +1,7 @@
+#EKS Cluster Role
+
 resource "aws_iam_role" "eks" {
-  name =  "${local.env}-${local.eks_name}-eks-cluster"
+  name =  var.project
 
   assume_role_policy = jsondecode( {  
     "Version": "2012-10-17",
@@ -13,4 +15,10 @@ resource "aws_iam_role" "eks" {
         }
     ]
 })
+}
+
+resource "aws_iam_role_policy_attachment" "eks" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role = aws_iam_role.eks.name
+  
 }

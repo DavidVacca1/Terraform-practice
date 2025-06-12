@@ -8,13 +8,17 @@ variable "cidr_block" {
 
 }
 
-variable "Public_eks_subnets" {
+variable "Public_subnets" {
   type        = list(string)
   description = "Lista de bloques CIDR para las subnets públicas"
 }
 
-variable "Private_eks_subnets" {
+variable "Private_subnets" {
   type        = list(string)
   description = "Lista de bloques CIDR para las subnets privadas"
 
+}
+variable "project_name" {
+  description = "The name of a project"
+  type        = string
 }
