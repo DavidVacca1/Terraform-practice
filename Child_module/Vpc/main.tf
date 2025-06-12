@@ -95,9 +95,9 @@ resource "aws_route_table_association" "Public_RT_association" {
 #     cidr_block     = var.cidr_block
 #     nat_gateway_id = aws_nat_gateway.eks_NG.id
 #   }
-tags = {
-  Name = "${var.project_name}-publc-rt"
-  }
+#   tags = {
+#   Name = "${var.project_name}-publc-rt"
+#  }
 # }
 
 # resource "aws_route_table_association" "Private_RT_association" {
