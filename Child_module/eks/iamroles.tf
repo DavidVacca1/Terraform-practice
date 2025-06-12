@@ -17,24 +17,43 @@ resource "aws_iam_role" "eks" {
 }
 
 resource "aws_iam_role_policy_attachment" "eks_cluster_policies" {
-  for_each = toset(var.eks_role_policy_arns)
+  for_each   = toset(var.eks_role_policy_arns)
   policy_arn = each.value
-  role = aws_iam_role.eks.name
-  
+  role       = aws_iam_role.eks.name
+
 }
 
 # EKS Worker nodes
+
+data "aws_iam_policy_document" "eks_assume" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
 resource "aws_iam_role" "eks_worker" {
-  name = "${var.project_name}-eks-worker-role"
-  assume_role_policy = data.aws_iam_policy_document.eks_assume.json 
+  name               = "${var.project_name}-eks-worker-role"
+  assume_role_policy = data.aws_iam_policy_document.eks_assume.json
 
 }
 
-resource "aws_iam_role_policy_attachment" "worker_policies" {
-  for_each = toset(var.worker_role_policy_arns)
-  policy_arn = each.value
+resource "aws_iam_instance_profile" "k8scluster_nodegroup_instance_profile" {
+  name = "${var.project_name}-nodegroup-instance-profile-1"
   role = aws_iam_role.eks_worker.name
-  
+}
+
+resource "aws_iam_role_policy_attachment" "worker_policies" {
+  for_each   = toset(var.worker_role_policy_arns)
+  policy_arn = each.value
+  role       = aws_iam_role.eks_worker.name
+
 }
 
 

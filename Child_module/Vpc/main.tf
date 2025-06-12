@@ -1,13 +1,13 @@
 # VPC Resource
 
 resource "aws_vpc" "Vpc_eks" {
-  cidr_block           = var.vpc_cidr
+  cidr_block           = var.vpc_id
   enable_dns_hostnames = true
   enable_dns_support   = true
   instance_tenancy     = "default"
 
   tags = {
-    Name = "${var.project_name}vpc"
+    Name = "${var.project_name}-vpc"
   }
 }
 
@@ -16,11 +16,11 @@ resource "aws_vpc" "Vpc_eks" {
 data "aws_availability_zones" "available" {}
 
 resource "aws_subnet" "Public_subnets" {
-  count             = length(var.Public_subnets) # crea subnet basada en el numero (length) de cird que estan en la variante public
-  vpc_id            = aws_vpc.Vpc_eks.id
-  cidr_block        = var.Public_subnets[count.index] #adjudica el cidr_block de la lista de Public_eks_subnets 
-  map_public_ip_on_launch = true # <- esto asigna IP pública automáticamente
-  availability_zone = data.aws_availability_zones.available.names[count.index % length(data.aws_availability_zones.available.names)]
+  count                   = length(var.Public_subnets) # crea subnet basada en el numero (length) de cird que estan en la variante public
+  vpc_id                  = aws_vpc.Vpc_eks.id
+  cidr_block              = var.Public_subnets[count.index] #adjudica el cidr_block de la lista de Public_eks_subnets 
+  map_public_ip_on_launch = true                            # <- esto asigna IP pública automáticamente
+  availability_zone       = data.aws_availability_zones.available.names[count.index % length(data.aws_availability_zones.available.names)]
   # busca las AZ disponibles y las distribulle segun cada subnet y si son mas subnets se repiten las AZ
 
   tags = {
@@ -28,12 +28,12 @@ resource "aws_subnet" "Public_subnets" {
   }
 }
 
-resource "aws_subnet" "Private_eks_subnets" {
-  count             = length(var.Private_subnets)
-  vpc_id            = aws_vpc.Vpc_eks.id
-  cidr_block        = var.Private_subnets[count.index]
+resource "aws_subnet" "Private_subnets" {
+  count                   = length(var.Private_subnets)
+  vpc_id                  = aws_vpc.Vpc_eks.id
+  cidr_block              = var.Private_subnets[count.index]
   map_public_ip_on_launch = false
-  availability_zone = data.aws_availability_zones.available.names[count.index % length(data.aws_availability_zones.available.names)]
+  availability_zone       = data.aws_availability_zones.available.names[count.index % length(data.aws_availability_zones.available.names)]
 
   tags = {
     Name = "${var.project_name}-private_subnet_${count.index + 1}"
@@ -47,7 +47,7 @@ resource "aws_subnet" "Private_eks_subnets" {
 resource "aws_internet_gateway" "eks_IG" {
   vpc_id = aws_vpc.Vpc_eks.id
 
-   tags = {
+  tags = {
     Name = "${var.project_name}-igw"
   }
 }
@@ -64,7 +64,7 @@ resource "aws_route_table" "Public_route_table" {
   }
 
   tags = {
-  Name = "${var.project_name}-publc-rt"
+    Name = "${var.project_name}-publc-rt"
   }
 }
 

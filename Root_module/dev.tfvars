@@ -19,10 +19,16 @@ roles_to_attach_custom_policy = [
 
 vpc_cidr = "10.0.0.0/16"
 
-Public_eks_subnets  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-Private_eks_subnets = ["10.0.10.0/24", "10.0.20.0/24", "10.0.30.0/24"]
+Public_subnets  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+Private_subnets = ["10.0.10.0/24", "10.0.20.0/24", "10.0.30.0/24"]
 
 
 # route tables
 
 cidr_block = "0.0.0.0/0"
+
+# eks
+project_name = "David_Practice"
+cluster_version = "1.30"
+k8s_service_cidr = "10.10.0.0/16"
+
