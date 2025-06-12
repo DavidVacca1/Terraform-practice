@@ -99,7 +99,7 @@ resource "aws_route_table_association" "Public_RT_association" {
 #   Name = "${var.project_name}-publc-rt"
 #  }
 # }
-
+# 
 # resource "aws_route_table_association" "Private_RT_association" {
 #   count          = length(aws_subnet.Private_subnets)
 #   subnet_id      = aws_subnet.Private_subnets[count.index].id
