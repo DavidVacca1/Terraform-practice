@@ -64,8 +64,6 @@ resource "aws_autoscaling_group" "k8scluster_nodegroup_asg" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.k8scluster_nodegroup-AmazonEKSWorkerNodePolicy,
-    aws_iam_role_policy_attachment.k8scluster_nodegroup-AmazonEKS_CNI_Policy,
-    aws_iam_role_policy_attachment.k8scluster_nodegroup-AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.worker_policies
   ]
 }

@@ -75,12 +75,32 @@ variable "volume_type" {
   description = "Worker nodes launch template volume type"
 }
 
-variable "iam_role_names" {
-  type        = list(string)
-  description = "EKS cluster iam role names, including admin access and all applications access"
-}
-
 variable "health_check_type" {
   type        = string
   description = "Woker nodes ASG health check type"
+}
+
+variable "coredns_version" {
+  type        = string
+  description = "EKS Addons version"
+}
+
+variable "vpc_cni_version" {
+  type        = string
+  description = "EKS Addons version"
+}
+
+variable "kube_proxy_version" {
+  type        = string
+  description = "EKS Addons version"
+}
+
+variable "ebs_csi_version" {
+  type        = string
+  description = "EKS Addons version"
+}
+
+variable "resolve_conflicts_on_update" {
+  type        = string
+  description = "How to resolve reflict on update, with preserve of overwrite"
 }
