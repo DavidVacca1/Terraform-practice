@@ -28,7 +28,7 @@ resource "aws_eks_cluster" "eks_cluster" {
   }
 }
 
-#version antigua de como instalar los addons
+#version mas usada
 
 resource "aws_eks_addon" "coredns" {
   cluster_name                = aws_eks_cluster.eks_cluster.name
@@ -52,9 +52,9 @@ resource "aws_eks_addon" "kube_proxy" {
   resolve_conflicts_on_update = var.resolve_conflicts_on_update
 }
 
-resource "aws_eks_addon" "ebs_csi" {
-  cluster_name                = aws_eks_cluster.eks_cluster.name
-  addon_name                  = "aws-ebs-csi-driver"
-  addon_version               = var.ebs_csi_version
-  resolve_conflicts_on_update = var.resolve_conflicts_on_update
-}
+# resource "aws_eks_addon" "ebs_csi" {
+#   cluster_name                = aws_eks_cluster.eks_cluster.name
+#   addon_name                  = "aws-ebs-csi-driver"
+#   addon_version               = var.ebs_csi_version
+#   resolve_conflicts_on_update = var.resolve_conflicts_on_update
+# }

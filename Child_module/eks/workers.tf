@@ -49,6 +49,12 @@ resource "aws_autoscaling_group" "k8scluster_nodegroup_asg" {
     value               = "${local.cluster_name}-auto-scaling-group"
     propagate_at_launch = true
   }
+
+  tag {
+    key                 = "eks.amazonaws.com/nodegroup"
+    value               = "dev-nodegroup"
+    propagate_at_launch = true
+  }
   mixed_instances_policy {
     launch_template {
       launch_template_specification {

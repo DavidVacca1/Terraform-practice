@@ -99,10 +99,10 @@ variable "kube_proxy_version" {
   description = "EKS Addons version"
 }
 
-variable "ebs_csi_version" {
-  type        = string
-  description = "EKS Addons version"
-}
+# variable "ebs_csi_version" {
+#   type        = string
+#   description = "EKS Addons version"
+# }
 
 variable "resolve_conflicts_on_update" {
   type        = string
